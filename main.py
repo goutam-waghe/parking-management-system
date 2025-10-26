@@ -5,6 +5,12 @@ from fastapi import FastAPI
 app = FastAPI()
 
 
+def new_feature():
+    print("new feature")
+
+def anither_feature():
+    print("another feature")
+    
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
