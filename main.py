@@ -5,6 +5,9 @@ from fastapi import FastAPI
 app = FastAPI()
 
 
+def new_feature():
+    print("new feature")
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
