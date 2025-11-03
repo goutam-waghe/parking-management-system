@@ -1,27 +1,11 @@
 from typing import Union
-
 from fastapi import FastAPI
-
+from user import userRouter
+from database import Base , engine
+from middleware.auth import isAuthenticated
 app = FastAPI()
+Base.metadata.create_all(bind=engine)
 
 
-def new_feature():
-    print("new feature")
-
-def anither_feature():
-    print("another feature")
-    
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
-
-@app.get("/items")
-def read_item():
-    return {
-        "message":"your all items"
-    }
+app.middleware("http")(isAuthenticated)
+app.include_router(userRouter.router)
